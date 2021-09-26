@@ -1,3 +1,4 @@
+using AveriaTest.Extensions;
 using AveriaTest.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,15 +23,18 @@ namespace AveriaTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //var multiplexer = ConnectionMultiplexer.Connect("localhost");
-            //services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+            var useRedis = false; // TODO: config
+            if (useRedis)
+                services.AddRedisStores();
+            else
+                services.AddInMemoryStores();
 
-            services.AddSingleton<IChatContext, MemoryChatContext>();
-            //services.AddSingleton<IChatContext, RedisChatContext>();
+            services.AddSingleton<IChatContext, ChatContext>();
 
             services.AddHostedService<ChatNotifier>();
 
             services.AddSignalR();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

@@ -1,0 +1,10 @@
+<h5>Online</h5>
+<mat-divider></mat-divider>
+<mat-list fxLayout="column">
+  <mat-list-item *ngFor="let user of users" [ngClass]="{ 'me': currentUser && user.name == currentUser.name }">
+    <div fxLayout="row" fxLayoutAlign="center">
+      <mat-icon fxLayoutAlign="center">brightness_1</mat-icon>
+      {{ user.name }}
+    </div>
+  </mat-list-item>
+</mat-list>

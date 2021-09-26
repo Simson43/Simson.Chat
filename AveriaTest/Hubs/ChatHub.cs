@@ -35,7 +35,7 @@ namespace AveriaTest.Hubs
                         .Where(x => x.Status == UserStatus.Online)
                         .ToList();
                 var lastMessages = (await _context.GetMessages())
-                        .Take(_messagesCount)
+                        .TakeLast(_messagesCount)
                         .ToList();
                 result.Users = activeUsers;
                 result.Messages = lastMessages;

@@ -1,10 +1,12 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, OnInit } from '@angular/core';
 import { ConfigService } from './services/config.service';
 import { ChatService } from './services/signalr/chat.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
   ready: boolean;
@@ -12,6 +14,7 @@ export class AppComponent implements OnInit {
   constructor(
     private configService: ConfigService,
     private injector: Injector,
+    private cdr: ChangeDetectorRef
   ) {
 
   }
@@ -22,5 +25,6 @@ export class AppComponent implements OnInit {
     await chatService.connect();
 
     this.ready = true;
+    this.cdr.detectChanges();
   }
 }

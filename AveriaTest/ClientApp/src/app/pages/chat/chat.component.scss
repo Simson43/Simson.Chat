@@ -1,0 +1,21 @@
+mat-drawer-content {
+  background-color: whitesmoke;
+  min-width: 20rem;
+  box-shadow: 5px;
+
+  messages-stream-component {
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  message-input-component {
+    padding: 1rem;
+    height: 9rem !important;
+  }
+}
+
+mat-drawer {
+  padding: 1rem;
+  background-color: white;
+  min-width: 20rem;
+}

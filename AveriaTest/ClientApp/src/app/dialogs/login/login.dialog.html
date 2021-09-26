@@ -1,0 +1,7 @@
+<form (submit)="login(input.value)" fxLayout="column" fxFlex>
+  <h4>Login</h4>
+  <mat-divider></mat-divider>
+  <mat-error>{{ errorMessage }}</mat-error>
+  <input type="text" matInput class="cloud" placeholder="User name" #input>
+  <button mat-button type="submit" class="cloud submit" [disabled]="!input.value">Sign In</button>
+</form>

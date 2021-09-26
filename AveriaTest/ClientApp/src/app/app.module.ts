@@ -4,54 +4,71 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { AuthComponent } from './auth/auth.component';
+import { HomeComponent } from './pages/home/home.component';
 
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { ChatComponent } from './chat/chat.component';
+import { ChatComponent } from './pages/chat/chat.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { MessageInputComponent } from './ui/message-input/message-input.component';
+import { MessagesStreamComponent } from './ui/messages-stream/messages-stream.component';
+import { UsersBarComponent } from './ui/users-bar/users-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginDialog } from './dialogs/login/login.dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AuthComponent,
     ChatComponent,
+    MessageInputComponent,
+    MessagesStreamComponent,
+    UsersBarComponent,
 
+    LoginDialog,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
 
-    MatSidenavModule,
-
+    FormsModule,
     ReactiveFormsModule,
-    //MatDialogModule,
-    //MatCardModule,
+    MatDialogModule,
+    MatCardModule,
     MatInputModule,
-    //MatSnackBarModule,
+    MatSnackBarModule,
 
-    //MatCheckboxModule,
-    //MatSelectModule,
-    //MatGridListModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatGridListModule,
     FlexLayoutModule,
     FlexModule,
-    //MatProgressSpinnerModule,
-    //MatIconModule,
+    MatProgressSpinnerModule,
+    MatIconModule,
+    MatSidenavModule,
     MatButtonModule,
     MatListModule,
 
-    FormsModule,
     RouterModule.forRoot([
-        { path: '', component: AuthComponent, pathMatch: 'full' }
-      ],
-      //{ relativeLinkResolution: 'legacy' }
-    )
+      {
+        path: '',
+        component: ChatComponent,
+      }
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

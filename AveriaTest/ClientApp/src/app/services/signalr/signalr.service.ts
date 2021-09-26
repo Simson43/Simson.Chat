@@ -29,7 +29,7 @@ export class SignalrService {
 
     this.connection.onreconnected(() => console.info('SignalrService reconnected'));
 
-    this.logger.info('SignalrService inited ' + this.connection.state);
+    this.logger.info('SignalrService inited: ' + this.connection.state);
   }
   
   public async start(): Promise<void> {

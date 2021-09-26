@@ -1,0 +1,15 @@
+.group {
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  &.mine {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+}
+
+
+.username {
+  margin: .5rem !important;
+  font-weight: bold;
+}

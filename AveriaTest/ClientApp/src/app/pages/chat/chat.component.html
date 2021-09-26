@@ -1,0 +1,11 @@
+<div fxFlexFill>
+  <mat-drawer-container class="example-container" fxFlexFill>
+    <mat-drawer-content fxLayout="column">
+      <messages-stream-component [currentUser]="currentUser" [messages]="messages" fxFlex></messages-stream-component>
+      <message-input-component (onSubmit)="sendMessage($event)" fxLayoutAlign="end"></message-input-component>
+    </mat-drawer-content>
+    <mat-drawer mode="side" position="end" opened>
+      <users-bar-component [currentUser]="currentUser" [users]="users"></users-bar-component>
+    </mat-drawer>
+  </mat-drawer-container>
+</div>

@@ -1,0 +1,53 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  font-size: 12px;
+}
+
+.filler {
+  flex: 1;
+}
+
+mat-spinner,
+mat-icon {
+  align-self: center !important;
+  justify-content: center !important;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.cloud {
+  box-shadow: 0px 0px 0.5rem rgba(0, 0, 0, 0.4) !important;
+  background-color: white !important;
+  border-radius: 1rem !important;
+  padding: 1rem !important;
+  margin: 0.5rem !important;
+  border: none !important;
+}
+
+.submit {
+  color: #fff;
+  background-color: #9159ff !important;
+  height: 4rem !important;
+  line-height: 12px !important;
+  min-width: 10rem !important;
+}
+
+input:active,
+button:active,
+input:focus,
+button:focus {
+  outline: none;
+}
+button:disabled {
+  opacity: 0.5 !important;
+  background-color: darkgrey !important;
+}

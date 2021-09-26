@@ -1,7 +1,7 @@
 import { User } from "./user.model";
 
 export class Message {
-  Date: Date;
-  Text: string
-  User: User;
+  date?: Date;
+  text: string
+  user: User;
 }

@@ -1,47 +1,49 @@
 ﻿using AveriaTest.Models;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AveriaTest
 {
-    public class MemoryChatContext : IChatContext
+    public class ChatContext : IChatContext
     {
-        private readonly List<Message> _messages = new List<Message>();
-        private readonly ConcurrentDictionary<string, User> _users = new ConcurrentDictionary<string, User>();
-
         public event Action<Message> MessageReceived;
         public event Action<User> UserStatusChanged;
 
+        private readonly IUserStore _userStore;
+        private readonly IMessageStore _messageStore;
+
+
+        public ChatContext(IUserStore userStore, IMessageStore messageStore)
+        {
+            _userStore = userStore;
+            _messageStore = messageStore;
+        }
+
         public Task<IEnumerable<Message>> GetMessages()
         {
-            lock (_messages)
-            {
-                return Task.FromResult(_messages.ToList().AsEnumerable());
-            }
+            return _messageStore.GetAll();
         }
 
         public Task<IEnumerable<User>> GetUsers()
         {
-            return Task.FromResult(_users.Values.AsEnumerable());
+            return _userStore.GetAll();
         }
 
-        public Task<LoginResult> Login(string userName)
+        public async Task<LoginResult> Login(string userName)
         {
             LoginResult result;
 
             try
             {
-                if (string.IsNullOrEmpty(userName))
+                if (string.IsNullOrWhiteSpace(userName))
                     result = new LoginResult(LoginReason.IncorrectUserName);
-                else if (_users.ContainsKey(userName))
+                else if (await _userStore.Contains(userName))
                     result = new LoginResult(LoginReason.AlreadyExists);
                 else
                 {
                     var user = new User(userName, UserStatus.Online);
-                    _users[userName] = user;
+                    await _userStore.Add(user);
                     result = LoginResult.GetSuccess;
                     UserStatusChanged?.Invoke(user);
                 }
@@ -51,25 +53,22 @@ namespace AveriaTest
                 result = new LoginResult(LoginReason.UnknownError);
             }
 
-            return Task.FromResult(result);
+            return result;
         }
 
-        public Task Logout(string userName)
+        public async Task Logout(string userName)
         {
-            _users.Remove(userName, out var user);
+            var user = await _userStore.Remove(userName);
             user.Status = UserStatus.Offline;
             UserStatusChanged?.Invoke(user);
-            return Task.CompletedTask;
         }
 
-        public Task AddMessage(Message message)
+        public async Task AddMessage(Message message)
         {
-            lock (_messages)
-            {
-                _messages.Add(message);
-            }
+            if (message == null || string.IsNullOrWhiteSpace(message.Text) || !await _userStore.Contains(message.User.Name))
+                return;
+            await _messageStore.Add(message);
             MessageReceived?.Invoke(message);
-            return Task.CompletedTask;
         }
     }
 }

@@ -1,0 +1,4 @@
+<form (submit)="submit(input.value) && input.value=''" fxLayout="row" fxFlexFill>
+  <input matInput #input class="cloud" placeholder="Type a message..." fxFlex/>
+  <button mat-button type="submit" class="cloud submit" [disabled]="!input.value">Send</button>
+</form>
