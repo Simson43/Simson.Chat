@@ -1,10 +1,10 @@
-﻿using AveriaTest.Models;
+﻿using Simson.Chat.Models;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AveriaTest
+namespace Simson.Chat
 {
     public class RedisUserStore : IUserStore
     {

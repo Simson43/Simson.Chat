@@ -1,8 +1,8 @@
-﻿using AveriaTest.Models;
+﻿using Simson.Chat.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AveriaTest
+namespace Simson.Chat
 {
     public interface IMessageStore
     {

@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.39.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.7" />
     <PackageReference Include="StackExchange.Redis" Version="2.2.50" />
   </ItemGroup>
@@ -27,6 +28,11 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\services\base-service.ts" />
     <None Remove="ClientApp\src\app\services\config.service.ts" />
+    <None Remove="Protos\greet.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

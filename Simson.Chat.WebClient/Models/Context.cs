@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AveriaTest.Models
+namespace Simson.Chat.Models
 {
     public class Context
     {

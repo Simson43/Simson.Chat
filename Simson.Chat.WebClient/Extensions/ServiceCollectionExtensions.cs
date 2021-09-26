@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace AveriaTest.Extensions
+namespace Simson.Chat.Extensions
 {
     public static class ServiceCollectionExtensions
     {

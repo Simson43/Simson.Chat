@@ -1,5 +1,5 @@
-using AveriaTest.Extensions;
-using AveriaTest.Hubs;
+using Simson.Chat.Extensions;
+using Simson.Chat.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StackExchange.Redis;
 
-namespace AveriaTest
+namespace Simson.Chat
 {
     public class Startup
     {
@@ -29,6 +29,7 @@ namespace AveriaTest
             else
                 services.AddInMemoryStores();
 
+            services.AddGrpc();
             services.AddSingleton<IChatContext, ChatContext>();
 
             services.AddHostedService<ChatNotifier>();
@@ -68,6 +69,8 @@ namespace AveriaTest
                 {
                     conf.Transports = HttpTransportType.WebSockets;
                 });
+
+                endpoints.MapGrpcService<GreeterService>();
             });
 
             app.UseSpa(spa =>

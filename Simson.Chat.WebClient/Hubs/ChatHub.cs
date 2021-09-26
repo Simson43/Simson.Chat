@@ -1,11 +1,11 @@
-﻿using AveriaTest.Models;
+﻿using Simson.Chat.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AveriaTest.Hubs
+namespace Simson.Chat.Hubs
 {
     public class ChatHub : Hub
     {

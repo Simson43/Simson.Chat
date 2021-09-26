@@ -1,10 +1,10 @@
-﻿using AveriaTest.Models;
+﻿using Simson.Chat.Models;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AveriaTest.Hubs
+namespace Simson.Chat.Hubs
 {
     public class ChatNotifier : IHostedService
     {

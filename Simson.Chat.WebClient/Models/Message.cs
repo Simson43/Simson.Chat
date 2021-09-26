@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AveriaTest.Models
+namespace Simson.Chat.Models
 {
     public class Message
     {

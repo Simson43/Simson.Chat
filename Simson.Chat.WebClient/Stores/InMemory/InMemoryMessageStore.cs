@@ -1,11 +1,11 @@
-﻿using AveriaTest.Models;
+﻿using Simson.Chat.Models;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace AveriaTest
+namespace Simson.Chat
 {
     public class InMemoryMessageStore : IMessageStore
     {

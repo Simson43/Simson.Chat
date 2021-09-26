@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace AveriaTest
+namespace Simson.Chat
 {
     public class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace AveriaTest.Models
+﻿namespace Simson.Chat.Models
 {
     public enum LoginReason
     {
