@@ -21,7 +21,7 @@ export class MessagesStreamComponent implements OnChanges, OnInit, OnDestroy {
   @Input() messages: Message[];
 
   messageGroups: MessageGroup[];
-  width = 25;
+  width = 30;
 
   private subscription: Subscription;
   private containerKey = 'container';
