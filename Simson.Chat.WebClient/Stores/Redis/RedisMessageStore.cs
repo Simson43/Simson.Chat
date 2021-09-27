@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Simson.Chat
@@ -17,12 +18,12 @@ namespace Simson.Chat
             _multiplexer = multiplexer;
         }
 
-        public Task Add(Message message)
+        public Task AddAsync(Message message, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Message>> GetAll()
+        public Task<IEnumerable<Message>> GetLastAsync(int count, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

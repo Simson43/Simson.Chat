@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using StackExchange.Redis;
+using Simson.Chat.gRPC;
 
 namespace Simson.Chat
 {
@@ -70,7 +70,7 @@ namespace Simson.Chat
                     conf.Transports = HttpTransportType.WebSockets;
                 });
 
-                endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<ChatService>();
             });
 
             app.UseSpa(spa =>

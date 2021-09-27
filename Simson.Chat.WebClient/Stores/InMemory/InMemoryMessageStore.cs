@@ -11,12 +11,12 @@ namespace Simson.Chat
     {
         private readonly ConcurrentQueue<Message> _messages = new ConcurrentQueue<Message>();
 
-        Task<IEnumerable<Message>> IMessageStore.GetAll()
+        public Task<IEnumerable<Message>> GetLastAsync(int count, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_messages.AsEnumerable()); // TODO: check
+            return Task.FromResult(_messages.TakeLast(count));
         }
 
-        public Task Add(Message message)
+        public Task AddAsync(Message message, CancellationToken cancellationToken)
         {
             _messages.Enqueue(message);
             return Task.CompletedTask;
