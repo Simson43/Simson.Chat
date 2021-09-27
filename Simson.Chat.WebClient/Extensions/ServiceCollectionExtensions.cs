@@ -12,9 +12,9 @@ namespace Simson.Chat.Extensions
             return services;
         }
 
-        public static IServiceCollection AddRedisStores(this IServiceCollection services)
+        public static IServiceCollection AddRedisStores(this IServiceCollection services, string address)
         {
-            var multiplexer = ConnectionMultiplexer.Connect("localhost");
+            var multiplexer = ConnectionMultiplexer.Connect(address);
             services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
             services.AddSingleton<IUserStore, RedisUserStore>();

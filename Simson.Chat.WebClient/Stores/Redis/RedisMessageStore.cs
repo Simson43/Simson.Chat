@@ -1,31 +1,29 @@
 ﻿using Simson.Chat.Models;
+using Simson.Chat.WebClient.Extensions;
 using StackExchange.Redis;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Simson.Chat
 {
-    public class RedisMessageStore : IMessageStore
+    public class RedisMessageStore : RedisStore, IMessageStore
     {
-        private readonly ConnectionMultiplexer _multiplexer;
+        public RedisMessageStore(IConnectionMultiplexer multiplexer)
+            : base("messages", multiplexer)
+        { }
 
-        private readonly string _key = "messages";
-
-        public RedisMessageStore(ConnectionMultiplexer multiplexer)
+        public async Task AddAsync(Message message, CancellationToken cancellationToken)
         {
-            _multiplexer = multiplexer;
+            await Db.ListRightPushAsync(Key, message.ToRedisValue());
         }
 
-        public Task AddAsync(Message message, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Message>> GetLastAsync(int count, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Message>> GetLastAsync(int count, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            var length = await Db.ListLengthAsync(Key);
+            return (await Db.ListRangeAsync(Key, length - count))
+                .Select(x => x.FromRedisValue<Message>());
         }
     }
 }

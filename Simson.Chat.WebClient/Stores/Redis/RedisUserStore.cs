@@ -1,41 +1,56 @@
 ﻿using Simson.Chat.Models;
+using Simson.Chat.WebClient.Extensions;
 using StackExchange.Redis;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Simson.Chat
 {
-    public class RedisUserStore : IUserStore
+    public class RedisUserStore : RedisStore, IUserStore
     {
-        private readonly ConnectionMultiplexer _multiplexer;
-
-        private readonly string _key = "users";
-
-        public RedisUserStore(ConnectionMultiplexer multiplexer, CancellationToken cancellationToken)
+        public RedisUserStore(IConnectionMultiplexer multiplexer)
+            : base("users", multiplexer)
         {
-            _multiplexer = multiplexer;
+            Db.KeyDelete(Key);
         }
 
-        public Task AddAsync(User entity, CancellationToken cancellationToken)
+        public async Task AddAsync(User user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await Db.ListRightPushAsync(Key, user.ToRedisValue());
         }
 
-        public Task<bool> ContainsAsync(string userName, CancellationToken cancellationToken)
+        public async Task<bool> ContainsAsync(string userName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await GetAsync(userName, cancellationToken) != null;
         }
 
-        public Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return (await Db.ListRangeAsync(Key))
+                .Select(x => x.FromRedisValue<User>());
         }
 
-        public Task<User> RemoveAsync(string userName, CancellationToken cancellationToken)
+        public async Task<User> RemoveAsync(string userName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await GetAsync(userName, cancellationToken);
+            if (result != null)
+                await Db.ListRemoveAsync(Key, result.ToRedisValue());
+            return result;
+
+        }
+
+        private async Task<User> GetAsync(string userName, CancellationToken cancellationToken)
+        {
+            var count = Db.ListLength(Key);
+            for (int i = 0; i < count; i++)
+            {
+                var item = (await Db.ListGetByIndexAsync(Key, i)).FromRedisValue<User>();
+                if (item.Name == userName)
+                    return item;
+            }
+            return null;
         }
     }
 }

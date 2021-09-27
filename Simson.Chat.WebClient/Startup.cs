@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simson.Chat.gRPC;
+using Simson.Chat.WebClient.Options;
+using Microsoft.Extensions.Options;
 
 namespace Simson.Chat
 {
@@ -23,9 +25,14 @@ namespace Simson.Chat
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var useRedis = false; // TODO: config
-            if (useRedis)
-                services.AddRedisStores();
+            var redisOptionsSection = Configuration.GetSection(nameof(RedisOptions));
+            var redisOptions = redisOptionsSection.Get<RedisOptions>();
+
+            services.Configure<RedisOptions>(redisOptionsSection);
+            services.Configure<ChatOptions>(Configuration.GetSection(nameof(ChatOptions)));
+
+            if (redisOptions.Enabled)
+                services.AddRedisStores(redisOptions.Host);
             else
                 services.AddInMemoryStores();
 
