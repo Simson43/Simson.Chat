@@ -1,7 +1,7 @@
 <div fxLayout="column" class="container" fxFlexFill>
   <div *ngFor="let group of messageGroups" fxLayout="column" class="group" [ngClass]="{'mine': currentUser && group.user.name == currentUser.name }">
     <div class="username">{{ group.user.name }}</div>
-    <div class="cloud" *ngFor="let message of group.messages">
+    <div class="cloud" *ngFor="let message of group.messages" [style.max-width.rem]="width">
       {{ message.text }}
     </div>
   </div>
